@@ -8,3 +8,6 @@ class UBookProfile(models.Model):
     state = models.CharField(max_length=255)
     zipcode = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.user.username
+
