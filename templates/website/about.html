@@ -1,0 +1,59 @@
+{% extends 'website/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+ <!-- About Section -->
+    <header class="success" id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                <img class="img-responsive" src="{% static "website/img/book_profile.jpg" %}" alt="">
+                    <h2>About</h2>
+                    <hr class="star-light">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-lg-offset-2">
+                    <p>College is expensive. We've been there. Having to pay hundreds of dollars for books you'll only use once is both financially and emotionally crushing. Sure, you can sell them back to your university bookstore, but when they pay you pennies and resell them for hundreds of times that, clearly it isn't working out.</p>
+                </div>
+                <div class="col-lg-4">
+                    <p>We created UBooks to get around all of that. We enable students to buy and sell books directly with each other without ridiculous price markups. Signing up with us allows you to search for books you need being sold by students just like you. Here at UBook, sell your own textbooks at a price you choose!</p>
+                </div>
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <a href="#" class="btn btn-lg btn-outline">
+                        <!--<i class="fa fa-download"></i>--> Sign Up Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Team -->
+    <section id="team">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>About the Team</h2>
+                    <hr class="star-primary">
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-lg-4">
+                    <img src="" class="img-circle">
+                    <h3>Gage Gaskins</h3>
+                    <p>Gage is a fourth year Computer Science major at the University of Virginia. He got fed up with having to buy textbooks that he knew others had but couldn't reach, so he helped start UBook to make getting textbooks easier and cheaper. In charge of web development and techincal wizardy at UBook.</p>
+                </div>
+                <div class="col-lg-4">
+                    <img src="" class="img-circle">
+                    <h3>Ryan Anderson</h3>
+					          <p>Ryan is a 4th year student at the University of Virginia, pursuing a BS in Computer Science with a minor in Business.</p>
+                </div>
+                <div class="col-lg-4">
+                    <img src="" class="img-circle">
+                    <h3>Andrew McLenigan</h3>
+                    <p>Andrew is a third year Computer Engineering major at the University of Virginia. He has always dreamed of a convenient, user-friendly online textbook exchange that would allow him to cheaply obtain exorbitantly priced textbooks. Andrew is a web developer and chief marketing strategist at UBook.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
