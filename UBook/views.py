@@ -1,6 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import render
+from django.core.mail import send_mail
 
 from .models import (User, UBookProfile)
 
@@ -29,10 +30,11 @@ def signup(request):
 
         new_ubook.save()
 
+        send_mail('UBook Profile Created!', 'Dope af', 'ubookautoreply@gmail.com', [email], fail_silently=False)
+
         return HttpResponseRedirect(reverse('index'))
 
 
 
     if request.method == 'GET':
         return render(request, 'website/signUp.html', {})
-
