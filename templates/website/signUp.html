@@ -15,54 +15,94 @@
                         <label class="col-sm-2 control-label" for="username">Username</label>
                         <div class="col-sm-10">
                             <input class="form-control col-sm-10" id="username" name="username" type="text" maxlength="255" placeholder="Username" />
+                            {{ form.username.errors }}
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="password">Password</label>
                         <div class="col-sm-10">
                             <input class="form-control col-sm-10" id="password" name="password" type="text" maxlength="255" placeholder="Password" />
+                            {{ form.password.errors }}
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="email">Email</label>
                         <div class="col-sm-10">
                             <input class="form-control col-sm-10" id="email" name="email" type="text" maxlength="255" placeholder="Email" />
+                            {{ form.email.errors }}
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" for="firstName">First Name</label>
+                        <label class="col-sm-2 control-label" for="first_name">First Name</label>
                         <div class="col-sm-10">
-                            <input class="form-control col-sm-10" id="firstName" name="firstName" type="text" maxlength="255" placeholder="First Name" />
+                            <input class="form-control col-sm-10" id="first_name" name="first_name" type="text" maxlength="255" placeholder="First Name" />
+                            {{ form.first_name.errors }}
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" for="lastName">Last Name</label>
+                        <label class="col-sm-2 control-label" for="last_name">Last Name</label>
                         <div class="col-sm-10">
-                            <input class="form-control col-sm-10" id="lastName" name="lastName" type="text" maxlength="255" placeholder="Last Name" />
+                            <input class="form-control col-sm-10" id="last_name" name="last_name" type="text" maxlength="255" placeholder="Last Name" />
+                            {{ form.last_name.errors }}
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="address">Address</label>
                         <div class="col-sm-10">
                             <input class="form-control col-sm-10" id="address" name="address" type="text" maxlength="255" placeholder="Address" />
+                            {{ form.address.errors }}
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="city">City</label>
                         <div class="col-sm-10">
                             <input class="form-control col-sm-10" id="city" name="city" type="text" maxlength="255" placeholder="City" />
+                            {{ form.city.errors }}
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="state">State</label>
                         <div class="col-sm-10">
                             <input class="form-control col-sm-10" id="state" name="state" type="text" maxlength="255" placeholder="State" />
+                            {{ form.state.errors }}
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="zipcode">Zipcode</label>
                         <div class="col-sm-10">
                             <input class="form-control col-sm-10" id="zipcode" name="zipcode" type="text" maxlength="255" placeholder="Zipcode" />
+                            {{ form.zipcode.errors }}
+                        </div>
+                    </div>
+                    <br/>
+                    <h3>Credit Card Information</h3>
+                    <br/>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="cc_type">Type</label>
+                        <div class="col-sm-10">
+                            <input class="form-control col-sm-10" id="cc_type" name="cc_type" type="text" maxlength="20" placeholder="Visa" />
+                            {{ form.cc_type.errors }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="cc_number">Credit Card Number</label>
+                        <div class="col-sm-10">
+                            <input class="form-control col-sm-10" id="cc_number" name="cc_number" type="text" maxlength="16" placeholder="0000000000000000" />
+                            {{ form.cc_number.errors }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="cc_expdate">Expiration Date</label>
+                        <div class="col-sm-10">
+                            <input class="form-control col-sm-10" id="cc_expdate" name="cc_expdate" type="text" maxlength="10" placeholder="01/01/2001" />
+                            {{ form.cc_expdate.errors }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="cc_ccv">CCV</label>
+                        <div class="col-sm-10">
+                            <input class="form-control col-sm-10" id="cc_ccv" name="cc_ccv" type="text" maxlength="3" placeholder="123" />
+                            {{ form.cc_ccv.errors }}
                         </div>
                     </div>
                     <input type="submit" class="btn btn-info btn-lg col-sm-offset-7" value="Sign Up">
