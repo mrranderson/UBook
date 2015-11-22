@@ -47,7 +47,7 @@ class UBookProfileForm(forms.Form):
 
     def clean_cc_expdate(self):
         data = self.cleaned_data['cc_expdate']
-        if not re.match('\d\d/[/-]d\d[/-]\d\d\d\d', data):
+        if not re.match('\d\d[/-]\d\d[/-]\d\d\d\d', data):
             raise forms.ValidationError("Please enter a valid expiration date in the form of MM/DD/YYYY or MM-DD-YYYY.")
         return data
 
