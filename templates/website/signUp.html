@@ -3,9 +3,6 @@
 
 {% block content %}
 	<header class="success" id="signup">
-
-<input type="checkbox" id="box" onclick ="reveal()">
-<input type="password" id="pw">
 		<div class="container">
             <div class="row">
                 <h1>Sign Up</h1>
@@ -97,7 +94,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="cc_expdate">Expiration Date</label>
                         <div class="col-sm-10">
-                            <input class="form-control col-sm-10" id="cc_expdate" name="cc_expdate" type="text" maxlength="10" placeholder="01/01/2001" {% if form.cc_expdate.value %} value="{{ form.cc_expdate.value }}" {% endif %} />
+                            <input class="form-control col-sm-10" id="cc_expdate" name="cc_expdate" type="text" maxlength="10" placeholder="01/01" {% if form.cc_expdate.value %} value="{{ form.cc_expdate.value }}" {% endif %} />
                             {{ form.cc_expdate.errors }}
                         </div>
                     </div>

@@ -33,21 +33,6 @@ def auth_logout(request):
 def signup(request):
 
     if request.method == 'POST':
-        """
-        username = request.POST['username']
-        password = request.POST['password']
-        email = request.POST['email']
-        first_name = request.POST['firstName']
-        last_name = request.POST['lastName']
-        address = request.POST['address']
-        city = request.POST['city']
-        state = request.POST['state']
-        zipcode = request.POST['zipcode']
-        cc_type = request.POST['cc_type']
-        cc_number = request.POST['cc_number']
-        cc_expdate = request.POST['cc_expdate']
-        cc_ccv = request.POST['cc_ccv']
-        """
 
         signup_form = UBookProfileForm(request.POST)
        
@@ -58,6 +43,8 @@ def signup(request):
                 first_name=signup_form.cleaned_data['first_name'], 
                 last_name=signup_form.cleaned_data['last_name'])
 
+            new_user.save()
+
             new_ubook = UBookProfile(user=new_user, 
                 address=signup_form.cleaned_data['address'], 
                 city=signup_form.cleaned_data['city'], 
@@ -67,22 +54,18 @@ def signup(request):
                 cc_number=signup_form.cleaned_data['cc_number'], 
                 cc_expdate=signup_form.cleaned_data['cc_expdate'], 
                 cc_ccv=signup_form.cleaned_data['cc_ccv'])
-            new_user.save()
             new_ubook.save()
-            return HttpResponseRedirect(reverse('index'))
-
         else:
-            print("FUCKIN SHIT UP")
-            print(signup_form.errors)
             return render(request, 'website/signUp.html', {
                 'error':True,
                 'errormsg':"Input Not Valid",
                 'form':signup_form
             })
 
-        send_mail('UBook Profile Created!', 'Dope af', 'ubookautoreply@gmail.com', [email], fail_silently=False)
+        send_mail('UBook Profile Created!', 'Thanks for joining UBook. Get started saving money on textbook',
+                  'ubookautoreply@gmail.com', [signup_form.cleaned_data['email']], fail_silently=False)
 
-        new_user = authenticate(username=username, password=password)
+        new_user = authenticate(username=signup_form.cleaned_data['username'], password=signup_form.cleaned_data['password'])
         login(request, new_user)
 
         return HttpResponseRedirect(reverse('index'))
