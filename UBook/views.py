@@ -17,8 +17,11 @@ def about(request):
 
 def auth_login(request):
     if request.method == 'POST':
-        user = authenticate(username=request.POST['username'], password=request.POST['password'])
-        login(request, user)
+        try:
+            user = authenticate(username=request.POST['username'], password=request.POST['password'])
+            login(request, user)
+        except:
+            pass
 
         return HttpResponseRedirect(reverse('index'))
 
