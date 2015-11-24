@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 
 {% load staticfiles %}
 
@@ -76,8 +76,16 @@
         </div>
         <!-- /.navbar-collapse -->
     </div>
+
     <!-- /.container-fluid -->
 </nav>
+    {% if kwargs.item_bought %}
+    <div class="alert alert-warning alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+        Awesome! Your textbook should reach you shortly!
+    </div>
+    {% endif %}
 
 
 {% block content %}{% endblock %}
@@ -166,6 +174,10 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 <script src="{% static "website/js/classie.js" %}"></script>
 <script src="{% static "website/js/cbpAnimatedHeader.js" %}"></script>
+<script src="{% static "website/js/jquery.bootstrap-growl.min.js" %}"></script>
+<script src="{% static "website/js/payments.js" %}"></script>
+
+
 
 <!-- Custom Theme JavaScript -->
 <script src="{% static "website/js/freelancer.js" %}"></script>

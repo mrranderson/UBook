@@ -3,17 +3,21 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.core.mail import send_mail
 from django.contrib.auth import login, authenticate, logout
+from django.http import JsonResponse
 
 from .models import User
 from UBook.models import UBookProfile, UBookProfileForm
 
 import stripe
 
-def index(request):
-    return render(request, 'website/index.html', {})
+
+def index(request, **kwargs):
+    return render(request, 'website/index.html', {'kwargs': kwargs})
+
 
 def about(request):
     return render(request, 'website/about.html', {})
+
 
 def auth_login(request):
     if request.method == 'POST':
@@ -33,88 +37,79 @@ def auth_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
 
-def signup(request):
 
+def signup(request):
     if request.method == 'POST':
-        """
-        username = request.POST['username']
-        password = request.POST['password']
-        email = request.POST['email']
-        first_name = request.POST['firstName']
-        last_name = request.POST['lastName']
-        address = request.POST['address']
-        city = request.POST['city']
-        state = request.POST['state']
-        zipcode = request.POST['zipcode']
-        cc_type = request.POST['cc_type']
-        cc_number = request.POST['cc_number']
-        cc_expdate = request.POST['cc_expdate']
-        cc_ccv = request.POST['cc_ccv']
-        """
 
         signup_form = UBookProfileForm(request.POST)
-       
+
         if signup_form.is_valid():
-            new_user = User.objects.create_user(username=signup_form.cleaned_data['username'], 
-                password=signup_form.cleaned_data['password'], 
-                email=signup_form.cleaned_data['email'], 
-                first_name=signup_form.cleaned_data['first_name'], 
-                last_name=signup_form.cleaned_data['last_name'])
+            new_user = User.objects.create_user(username=signup_form.cleaned_data['username'],
+                                                password=signup_form.cleaned_data['password'],
+                                                email=signup_form.cleaned_data['email'],
+                                                first_name=signup_form.cleaned_data['first_name'],
+                                                last_name=signup_form.cleaned_data['last_name'])
 
-            new_ubook = UBookProfile(user=new_user, 
-                address=signup_form.cleaned_data['address'], 
-                city=signup_form.cleaned_data['city'], 
-                state=signup_form.cleaned_data['state'], 
-                zipcode=signup_form.cleaned_data['zipcode'], 
-                cc_type=signup_form.cleaned_data['cc_type'], 
-                cc_number=signup_form.cleaned_data['cc_number'], 
-                cc_expdate=signup_form.cleaned_data['cc_expdate'], 
-                cc_ccv=signup_form.cleaned_data['cc_ccv'])
             new_user.save()
-            new_ubook.save()
-            return HttpResponseRedirect(reverse('index'))
 
+            new_ubook = UBookProfile(user=new_user,
+                                     address=signup_form.cleaned_data['address'],
+                                     city=signup_form.cleaned_data['city'],
+                                     state=signup_form.cleaned_data['state'],
+                                     zipcode=signup_form.cleaned_data['zipcode'],
+                                     cc_type=signup_form.cleaned_data['cc_type'],
+                                     cc_number=signup_form.cleaned_data['cc_number'],
+                                     cc_expdate=signup_form.cleaned_data['cc_expdate'],
+                                     cc_ccv=signup_form.cleaned_data['cc_ccv'])
+            new_ubook.save()
         else:
-            print("FUCKIN SHIT UP")
-            print(signup_form.errors)
             return render(request, 'website/signUp.html', {
-                'error':True,
-                'errormsg':"Input Not Valid",
-                'form':signup_form
+                'error': True,
+                'errormsg': "Input Not Valid",
+                'form': signup_form
             })
 
-        send_mail('UBook Profile Created!', 'Dope af', 'ubookautoreply@gmail.com', [email], fail_silently=False)
+        send_mail('UBook Profile Created!', 'Thanks for joining UBook. Get started saving money on textbook',
+                  'ubookautoreply@gmail.com', [signup_form.cleaned_data['email']], fail_silently=False)
 
-        new_user = authenticate(username=username, password=password)
+        new_user = authenticate(username=signup_form.cleaned_data['username'],
+                                password=signup_form.cleaned_data['password'])
         login(request, new_user)
 
         return HttpResponseRedirect(reverse('index'))
 
     if request.method == 'GET':
         form = UBookProfileForm()
-        return render(request, 'website/signUp.html', {"form":form})
+        return render(request, 'website/signUp.html', {"form": form})
+
 
 def charge(request):
-
     if request.method == 'POST':
         # Set your secret key: remember to change this to your live secret key in production
         # See your keys here https://dashboard.stripe.com/account/apikeys
         stripe.api_key = "sk_test_EqcgbisfuVnctYONDROGsHYd"
 
-        # Get the credit card details submitted by the form
-        token = request.POST['stripeToken']
+        amt = int(request.POST['price'])*100;
+        profile = UBookProfile.objects.get(user=request.user)
 
         # Create the charge on Stripe's servers - this will charge the user's card
         try:
-          charge = stripe.Charge.create(
-              amount=1000, # amount in cents, again
-              currency="usd",
-              source=token,
-              description="Example charge"
-          )
-        except stripe.error.CardError as e:
-          # The card has been declined
-          pass
-        return HttpResponseRedirect(reverse('index'))
+            charge = stripe.Charge.create(
+                amount=amt,  # amount in cents, again
+                currency="usd",
+                description="Textbook Bought",
+                card={
+                    "number": profile.cc_number,
+                    "exp_month": profile.cc_expdate[0:2],
+                    "exp_year": profile.cc_expdate[3:],
+                    "cvc": profile.cc_ccv
+                }
+            )
+            print("Card accepted")
+            return JsonResponse({'response': True})
+        except Exception as e:
+            # The card has been declined
+            print(e)
+            return JsonResponse({'response': e})
 
-    return render(request, 'website/charge.html', {})
+    return HttpResponseRedirect(reverse('index'))

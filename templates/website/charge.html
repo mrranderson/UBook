@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<form action="" method="POST" id="payment-form">
+<form action="{% url 'charge' price %}" method="POST" id="payment-form">
     {% csrf_token %}
     <span class="payment-errors"></span>
 
