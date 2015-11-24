@@ -22,6 +22,9 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^index/$', views.index, name='index'),
     url(r'^about/$', views.about, name='about'),
-    url(r'^signup/$', views.signup, name='signup')
+    url(r'^signup/$', views.signup, name='signup'),
+    url(r'^charge/$', views.charge, name='charge'),
+    url(r'^login/$', views.auth_login, name='login'),
+    url(r'^logout/$', views.auth_logout, name='logout')
 
 ]
