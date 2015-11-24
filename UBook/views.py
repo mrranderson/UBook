@@ -110,6 +110,6 @@ def charge(request):
         except Exception as e:
             # The card has been declined
             print(e)
-            return JsonResponse({'response': e})
+            return JsonResponse({'response': False})
 
     return HttpResponseRedirect(reverse('index'))
