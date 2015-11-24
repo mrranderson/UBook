@@ -33,6 +33,18 @@ class UBookProfileForm(forms.Form):
     cc_expdate = forms.CharField(max_length=10)
     cc_ccv = forms.CharField(max_length=3)
 
+    def clean_first_name(self):
+        data = self.cleaned_data['first_name']
+        if not re.match('^[a-zA-Z]*$', data):
+            raise forms.ValidationError("Please enter a name containing only alphabetical characters.")
+        return data
+
+    def clean_last_name(self):
+        data = self.cleaned_data['last_name']
+        if not re.match('^[a-zA-Z]*$', data):
+            raise forms.ValidationError("Please enter a name containing only alphabetical characters.")
+        return data
+
     def clean_zipcode(self):
         data = self.cleaned_data['zipcode']
         if not re.match('\d\d\d\d\d(-\d\d\d\d)?', data):
